@@ -51,6 +51,63 @@
 			style: polyStyle
 		}).addTo(mymap);
 	});
+	.info { 
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif; 
+    background: white; 
+    background: rgba(255,255,255,0.9); 
+    box-shadow: 0 0 15px rgba(0,0,0,0.2); 
+    border-radius: 5px; 
+    opacity: 1.5;
+} 
+
+.info h2 {
+    margin: 2px 0px 0px 0px;
+    color: #777; 
+}
+
+.info h4 { 
+    margin: 0px 0px 5px; 
+    color: #777; 
+}
+
+
+.legend {
+line-height: 18px;
+color: #555;
+}
+
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.75;
+};
+}
+// Add legend - modified from https://leafletjs.com/examples/choropleth/ 
+    
+    var legend = L.control({position: 'bottomleft'});
+    
+    legend.onAdd = function (mymap) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [1, 2500, 5000, 7000, 10000, 15000],
+        labels = [];
+
+    div.innerHTML ='<h2>Census by Community 2019</h2>' + '<br>' + '<h4>Number of residents per community</h4>';
+        
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + colourBreaks(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+    };
+
+    legend.addTo(mymap);
 	 // Define colours based on data ranges (create choropleth map)
     function colourBreaks(d) {
         return d > 15000 ? '#b10026' :
